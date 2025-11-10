@@ -4,7 +4,7 @@ from copy import deepcopy
 from labyrinth_game.constants import ROOMS
 from labyrinth_game import player_actions, utils
 
-game_state = {
+game_state_template = {
     'player_inventory': [],  # Инвентарь игрока
     'current_room': 'entrance',  # Текущая комната
     'game_over': False,  # Значения окончания игры
@@ -16,7 +16,7 @@ def main():
     print("Добро пожаловать в Лабиринт сокровищ!")
     utils.describe_current_room(game_state)
 
-    while not game_state["game over"]:
+    while not game_state["game_over"]:
         cmd = player_actions.get_input("> ")
         process_command(game_state, cmd)
 
