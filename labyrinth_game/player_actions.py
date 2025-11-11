@@ -17,3 +17,19 @@ def get_input(prompt: str = "> ") -> str:
     except (KeyboardInterrupt, EOFError):
         print("\nВыход из игры.")
         return "quit"
+
+
+def move_player(game_state, direction: str):
+    current = game_state["current_room"]
+    room = ROOMS.get(current, {})
+    exits = room.get("exits", {})
+    direction = direction.lower()
+
+    if direction in exits:
+        new_room = exits[direction]
+        game_state["current_room"] = new_room
+        game_state["steps_taken"] += 1
+        from labyrinth_game.utils import describe_current_room
+        describe_current_room(game_state)
+    else:
+        print("Нельзя пойти в этом направлении.")
