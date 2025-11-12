@@ -41,7 +41,7 @@ def random_event(game_state):
 # Случайное событие при перемещении игрока
     steps = game_state.get("steps_taken", 0)
 
-    # Определяем, произойдет ли событие
+    # Определяем, произойдёт ли событие
     if pseudo_random(steps, PROBABILITY) != 0:
         return  # ничего не происходит
 
@@ -116,7 +116,10 @@ def solve_puzzle(game_state):
     from labyrinth_game.player_actions import get_input
     answer = get_input("Ваш ответ: ").strip().lower()
 
-
+    # Альтернативные варианты для числа 10
+    valid_answers = {correct.lower()}
+    if correct == "10":
+        valid_answers.add("10")
 
     if answer in valid_answers:
         print("Верно! Загадка решена.")
