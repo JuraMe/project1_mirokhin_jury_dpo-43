@@ -49,3 +49,32 @@ def take_item(game_state, item_name: str):
         print(f"Вы подняли: {item_name}")
     else:
         print("Такого предмета здесь нет.")
+
+
+def use_item(game_state, item_name: str):
+    item_name = item_name.strip()
+    inv = game_state.get("player_inventory", [])
+
+    if item_name not in inv:
+        print("У вас нет такого предмета.")
+        return
+
+# выводит сообщение о том, что стало светлее
+    if item_name == "torch":
+        print(
+            "Стало светлее "
+        )
+# сообщение об уверенности
+    elif item_name == "sword":
+        print("Взял меч, чувствуете себя увереннее.")
+# сообщение об открытии шкатулки
+    elif item_name == "bronze_box":
+
+        if "rusty_key" not in inv:
+            print("Открыта бронзовая шкатулка")
+            inv.append("rusty_key")
+        else:
+            print("Шкатулка пустая.")
+    else:
+        print("Вы не знаете, как использовать этот предмет.")
+
