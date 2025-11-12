@@ -8,6 +8,9 @@ def pseudo_random(seed: int, modulo: int) -> int:
     fractional = x - math.floor(x)
     return int(fractional * modulo)
 
+# Константы для ловушек
+MODULO = 10
+THRESHOLD = 3
 
 def trigger_trap(game_state):
 
@@ -23,16 +26,47 @@ def trigger_trap(game_state):
         lost_item = inv.pop(lost_index)
         print(f"Вы потеряли предмет: {lost_item}")
     else:
-        outcome = pseudo_random(steps, TRAP_DAMAGE_MODULO)
-        if outcome < TRAP_FATAL_THRESHOLD:
+        outcome = pseudo_random(steps, MODULO)
+        if outcome < THRESHOLD:
             print("Пол внезапно проваливается под вами... Вы погибли.")
             game_state["game_over"] = True
         else:
             print("Вы чудом удержались на краю и выжили!")
 
+# Константы для случайных событий
+PROBABILITY = 10
+VARIANTS = 3
 
+def random_event(game_state):
+# Случайное событие при перемещении игрока
+    steps = game_state.get("steps_taken", 0)
 
+    # Определяем, произойдет ли событие
+    if pseudo_random(steps, PROBABILITY) != 0:
+        return  # ничего не происходит
 
+    # Выбираем тип события
+    event_type = pseudo_random(steps + 1, VARIANTS)
+    current_room = game_state["current_room"]
+    room = ROOMS.get(current_room, {})
+    inv = game_state["player_inventory"]
+
+    if event_type == 0:
+        # Сценарий 1: находка
+        print("Монета ваша!")
+        room.setdefault("items", []).append("coin")
+
+    elif event_type == 1:
+        # Сценарий 2: испуг
+        print("Алярм! Шорох")
+        if "sword" in inv:
+            print("У тебя меч, шорох пропадает")
+
+    elif event_type == 2:
+        # Сценарий 3: ловушка
+        if current_room == "trap_room" and "torch" not in inv:
+            print("В темноте вы наступили на подозрительную плиту...")
+            trigger_trap(game_state)
 
 
 
