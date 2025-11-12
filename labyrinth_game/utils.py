@@ -9,6 +9,32 @@ def pseudo_random(seed: int, modulo: int) -> int:
     return int(fractional * modulo)
 
 
+def trigger_trap(game_state):
+
+    print("Ловушка активирована! Пол стал дрожать")
+
+    inv = game_state.get("player_inventory", [])
+    steps = game_state.get("steps_taken", 0)
+
+# Если у игрока есть предметы, то он теряет один случайный
+
+    if inv:
+        lost_index = pseudo_random(steps, len(inv))
+        lost_item = inv.pop(lost_index)
+        print(f"Вы потеряли предмет: {lost_item}")
+    else:
+        outcome = pseudo_random(steps, TRAP_DAMAGE_MODULO)
+        if outcome < TRAP_FATAL_THRESHOLD:
+            print("Пол внезапно проваливается под вами... Вы погибли.")
+            game_state["game_over"] = True
+        else:
+            print("Вы чудом удержались на краю и выжили!")
+
+
+
+
+
+
 
 
 def describe_current_room(game_state: Dict):
