@@ -78,3 +78,4 @@ def use_item(game_state, item_name: str):
     else:
         print("Вы не знаете, как использовать этот предмет.")
 
+
