@@ -21,13 +21,13 @@ def process_command(game_state, command):
     cmd = parts[0]
     arg = parts[1] if len(parts) > 1 else None
 
-    # --- короткие команды направления ---
+    #  короткие команды направления
     directions = ("north", "south", "east", "west")
     if cmd in directions:
         player_actions.move_player(game_state, cmd)
         return
 
-    # --- разбор стандартных команд ---
+    # разбор стандартных команд
     match cmd:
         case "go":
             if arg:
