@@ -1,5 +1,15 @@
+import math
 from typing import Dict
 from labyrinth_game.constants import ROOMS
+
+def pseudo_random(seed: int, modulo: int) -> int:
+# генератор случайного числа на основе синуса
+    x = math.sin(seed * 12.9898) * 43758.5453
+    fractional = x - math.floor(x)
+    return int(fractional * modulo)
+
+
+
 
 def describe_current_room(game_state: Dict):
     room_key = game_state["current_room"]
