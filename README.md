@@ -15,8 +15,7 @@
 а закончите хитрой сетью функций, где каждый поворот — это тест на мастерство.
 
 ## Запуск 
-poetry run project
-make project
+poetry run project или make project
 
 Игровые команды
 Команда	Действие
@@ -30,3 +29,8 @@ help	        -- Показать список доступных команд
 quit	        -- Выйти из игры
 
 ## Запись asciinema
+https://asciinema.org/a/P9QvFg42GqHx6wnI0McJS4A7G
+
+
+Мирохин Юрий
+ДПО 43

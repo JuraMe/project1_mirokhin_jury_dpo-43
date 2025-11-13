@@ -126,7 +126,7 @@ def solve_puzzle(game_state):
     # Альтернативные варианты для числа 10
     valid_answers = {correct.lower()}
     if correct == "10":
-        valid_answers.add("10")
+        valid_answers.add("десять")
 
     if answer in valid_answers:
         print("Верно! Загадка решена.")
