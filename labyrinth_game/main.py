@@ -5,14 +5,15 @@ from labyrinth_game import player_actions, utils
 from labyrinth_game.constants import COMMANDS
 
 game_state_template = {
-    'player_inventory': [],  # Инвентарь игрока
-    'current_room': 'entrance',  # Текущая комната
-    'game_over': False,  # Значения окончания игры
-    'steps_taken': 0  # Количество шагов
+    "player_inventory": [],  # Инвентарь игрока
+    "current_room": "entrance",  # Текущая комната
+    "game_over": False,  # Значения окончания игры
+    "steps_taken": 0,  # Количество шагов
 }
 
+
 def process_command(game_state, command):
-# Обработка введённой пользователем команды
+    # Обработка введённой пользователем команды
     parts = command.strip().lower().split()
     if not parts:
         print("Введите команду. (help — список команд)")
@@ -69,6 +70,7 @@ def process_command(game_state, command):
         case _:
             print("Неизвестная команда. Введите 'help' для списка.")
 
+
 def main():
     game_state = deepcopy(game_state_template)
     print("Добро пожаловать в Лабиринт сокровищ!")
@@ -77,6 +79,7 @@ def main():
     while not game_state["game_over"]:
         cmd = player_actions.get_input("> ")
         process_command(game_state, cmd)
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,7 @@
 from typing import Dict
+
 from labyrinth_game.constants import ROOMS
+
 
 # Функция отображения инвентаря
 def show_inventory(game_state: Dict):
@@ -11,13 +13,15 @@ def show_inventory(game_state: Dict):
     for item in inv:
         print(f"  - {item}")
 
-#Ввод пользователя
+
+# Ввод пользователя
 def get_input(prompt: str = "> ") -> str:
     try:
         return input(prompt).strip()
     except (KeyboardInterrupt, EOFError):
         print("\nВыход из игры.")
         return "quit"
+
 
 # Функция перемещения
 def move_player(game_state, direction: str):
@@ -39,8 +43,7 @@ def move_player(game_state, direction: str):
             return
         else:
             print(
-                "Вы используете найденный ключ, чтобы "
-                "открыть путь в комнату сокровищ."
+                "Вы используете найденный ключ, чтобы открыть путь в комнату сокровищ."
             )
 
     # Обновляем состояние игрока
@@ -54,6 +57,7 @@ def move_player(game_state, direction: str):
 
     # Вызываем случайное событие
     random_event(game_state)
+
 
 # Функция взятия предмета
 def take_item(game_state, item_name: str):
@@ -69,6 +73,7 @@ def take_item(game_state, item_name: str):
     else:
         print("Такого предмета здесь нет.")
 
+
 def use_item(game_state, item_name: str):
     item_name = item_name.strip()
     inv = game_state.get("player_inventory", [])
@@ -77,17 +82,14 @@ def use_item(game_state, item_name: str):
         print("У вас нет такого предмета.")
         return
 
-# выводит сообщение о том, что стало светлее
+    # выводит сообщение о том, что стало светлее
     if item_name == "torch":
-        print(
-            "Стало светлее "
-        )
-# сообщение об уверенности
+        print("Стало светлее ")
+    # сообщение об уверенности
     elif item_name == "sword":
         print("Взял меч, чувствуете себя увереннее.")
-# сообщение об открытии шкатулки
+    # сообщение об открытии шкатулки
     elif item_name == "bronze_box":
-
         if "rusty_key" not in inv:
             print("Открыта бронзовая шкатулка")
             inv.append("rusty_key")

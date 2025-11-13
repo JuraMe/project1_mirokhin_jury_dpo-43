@@ -1,17 +1,19 @@
 import math
 from typing import Dict
+
 from labyrinth_game.constants import ROOMS
 
-#Константы для генератора
+# Константы для генератора
 CONST_1 = 12.9898
 CONST_2 = 43758.5453
 
 
 def pseudo_random(seed: int, modulo: int) -> int:
-# генератор случайного числа на основе синуса
+    # генератор случайного числа на основе синуса
     x = math.sin(seed * CONST_1) * CONST_2
     fractional = x - math.floor(x)
     return int(fractional * modulo)
+
 
 # Константы для ловушек
 MODULO = 10
@@ -19,13 +21,12 @@ THRESHOLD = 3
 
 
 def trigger_trap(game_state):
-
     print("Ловушка активирована! Пол стал дрожать")
 
     inv = game_state.get("player_inventory", [])
     steps = game_state.get("steps_taken", 0)
 
-# Если у игрока есть предметы, то он теряет один случайный
+    # Если у игрока есть предметы, то он теряет один случайный
     if inv:
         lost_index = pseudo_random(steps, len(inv))
         lost_item = inv.pop(lost_index)
@@ -39,13 +40,14 @@ def trigger_trap(game_state):
         else:
             print("Вы чудом удержались на краю и выжили!")
 
+
 # Константы для случайных событий
 PROBABILITY = 10
 VARIANTS = 3
 
 
 def random_event(game_state):
-# Случайное событие при перемещении игрока
+    # Случайное событие при перемещении игрока
     steps = game_state.get("steps_taken", 0)
 
     # Определяем, произойдёт ли событие
@@ -74,6 +76,7 @@ def random_event(game_state):
         if current_room == "trap_room" and "torch" not in inv:
             print("В темноте вы наступили на подозрительную плиту...")
             trigger_trap(game_state)
+
 
 def describe_current_room(game_state: Dict):
     room_key = game_state["current_room"]
@@ -104,6 +107,7 @@ def describe_current_room(game_state: Dict):
     if room.get("puzzle"):
         print("\nКажется, здесь есть загадка (используйте команду solve).")
 
+
 def solve_puzzle(game_state):
     current = game_state["current_room"]
     room = ROOMS.get(current, {})
@@ -116,6 +120,7 @@ def solve_puzzle(game_state):
     print(question)
 
     from labyrinth_game.player_actions import get_input
+
     answer = get_input("Ваш ответ: ").strip().lower()
 
     # Альтернативные варианты для числа 10
@@ -142,7 +147,9 @@ def solve_puzzle(game_state):
         # Если это ловушка — активируем её
         if current == "trap_room":
             from labyrinth_game.utils import trigger_trap
+
             trigger_trap(game_state)
+
 
 def attempt_open_treasure(game_state):
     current = game_state["current_room"]
@@ -168,9 +175,8 @@ def attempt_open_treasure(game_state):
 
     # Предложить ввести код
     from labyrinth_game.player_actions import get_input
-    ans = get_input(
-        "Сундук заперт. Хотите ввести код? (да/нет) "
-        ).strip().lower()
+
+    ans = get_input("Сундук заперт. Хотите ввести код? (да/нет) ").strip().lower()
     if ans in ("да", "yes", "y"):
         puzzle = room.get("puzzle")
         if not puzzle:
@@ -187,6 +193,7 @@ def attempt_open_treasure(game_state):
             print("Неверный код.")
     else:
         print("Вы отступаете от сундука.")
+
 
 def show_help():
     print("\nДоступные команды:")
