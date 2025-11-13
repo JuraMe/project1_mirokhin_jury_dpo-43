@@ -77,5 +77,3 @@ def use_item(game_state, item_name: str):
             print("Шкатулка пустая.")
     else:
         print("Вы не знаете, как использовать этот предмет.")
-
-
