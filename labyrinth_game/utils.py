@@ -2,15 +2,21 @@ import math
 from typing import Dict
 from labyrinth_game.constants import ROOMS
 
+#Константы для генератора
+CONST_1 = 12.9898
+CONST_2 = 43758.5453
+
+
 def pseudo_random(seed: int, modulo: int) -> int:
 # генератор случайного числа на основе синуса
-    x = math.sin(seed * 12.9898) * 43758.5453
+    x = math.sin(seed * CONST_1) * CONST_2
     fractional = x - math.floor(x)
     return int(fractional * modulo)
 
 # Константы для ловушек
 MODULO = 10
 THRESHOLD = 3
+
 
 def trigger_trap(game_state):
 
@@ -20,12 +26,12 @@ def trigger_trap(game_state):
     steps = game_state.get("steps_taken", 0)
 
 # Если у игрока есть предметы, то он теряет один случайный
-
     if inv:
         lost_index = pseudo_random(steps, len(inv))
         lost_item = inv.pop(lost_index)
         print(f"Вы потеряли предмет: {lost_item}")
     else:
+        # Пустой инвентарь
         outcome = pseudo_random(steps, MODULO)
         if outcome < THRESHOLD:
             print("Пол внезапно проваливается под вами... Вы погибли.")
@@ -36,6 +42,7 @@ def trigger_trap(game_state):
 # Константы для случайных событий
 PROBABILITY = 10
 VARIANTS = 3
+
 
 def random_event(game_state):
 # Случайное событие при перемещении игрока
@@ -68,9 +75,6 @@ def random_event(game_state):
             print("В темноте вы наступили на подозрительную плиту...")
             trigger_trap(game_state)
 
-
-
-
 def describe_current_room(game_state: Dict):
     room_key = game_state["current_room"]
     room = ROOMS.get(room_key)
@@ -99,8 +103,6 @@ def describe_current_room(game_state: Dict):
     # Загадка
     if room.get("puzzle"):
         print("\nКажется, здесь есть загадка (используйте команду solve).")
-
-
 
 def solve_puzzle(game_state):
     current = game_state["current_room"]

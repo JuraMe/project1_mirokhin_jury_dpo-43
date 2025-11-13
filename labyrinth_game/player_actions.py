@@ -1,4 +1,3 @@
-
 from typing import Dict
 from labyrinth_game.constants import ROOMS
 
@@ -6,7 +5,7 @@ from labyrinth_game.constants import ROOMS
 def show_inventory(game_state: Dict):
     inv = game_state.get("player_inventory", [])
     if not inv:
-        print("Ваш инвентарь пуст.")
+        print("Ваш инвентарь пуст")
         return
     print("Инвентарь:")
     for item in inv:
@@ -27,14 +26,34 @@ def move_player(game_state, direction: str):
     exits = room.get("exits", {})
     direction = direction.lower()
 
-    if direction in exits:
-        new_room = exits[direction]
-        game_state["current_room"] = new_room
-        game_state["steps_taken"] += 1
-        from labyrinth_game.utils import describe_current_room
-        describe_current_room(game_state)
-    else:
+    if direction not in exits:
         print("Нельзя пойти в этом направлении.")
+        return
+
+    new_room = exits[direction]
+
+    # Проверка перехода в комнату сокровищ
+    if new_room == "treasure_room":
+        if "rusty_key" not in game_state["player_inventory"]:
+            print("Дверь заперта. Нужен ключ, чтобы пройти дальше.")
+            return
+        else:
+            print(
+                "Вы используете найденный ключ, чтобы "
+                "открыть путь в комнату сокровищ."
+            )
+
+    # Обновляем состояние игрока
+    game_state["current_room"] = new_room
+    game_state["steps_taken"] += 1
+
+    from labyrinth_game.utils import describe_current_room, random_event
+
+    # Показываем описание новой комнаты
+    describe_current_room(game_state)
+
+    # Вызываем случайное событие
+    random_event(game_state)
 
 # Функция взятия предмета
 def take_item(game_state, item_name: str):
@@ -49,7 +68,6 @@ def take_item(game_state, item_name: str):
         print(f"Вы подняли: {item_name}")
     else:
         print("Такого предмета здесь нет.")
-
 
 def use_item(game_state, item_name: str):
     item_name = item_name.strip()

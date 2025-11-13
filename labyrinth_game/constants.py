@@ -102,7 +102,6 @@ ROOMS = {
         'puzzle': None
     },
 }
-
 COMMANDS = {
     'go <direction>': "перейти в направлении (north/south/east/west)",
     'look': "-осмотреть текущую комнату",

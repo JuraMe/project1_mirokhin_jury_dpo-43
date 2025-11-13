@@ -12,7 +12,7 @@ game_state_template = {
 }
 
 def process_command(game_state, command):
-    # Обработка введённой пользователем команды
+# Обработка введённой пользователем команды
     parts = command.strip().lower().split()
     if not parts:
         print("Введите команду. (help — список команд)")
@@ -33,7 +33,7 @@ def process_command(game_state, command):
             if arg:
                 player_actions.move_player(game_state, arg)
             else:
-                print("Укажите направление, куда идти (north/south/east/west).")
+                print("Укажите направление: north/south/east/west.")
 
         case "look":
             utils.describe_current_room(game_state)
@@ -69,7 +69,6 @@ def process_command(game_state, command):
         case _:
             print("Неизвестная команда. Введите 'help' для списка.")
 
-
 def main():
     game_state = deepcopy(game_state_template)
     print("Добро пожаловать в Лабиринт сокровищ!")
@@ -78,7 +77,6 @@ def main():
     while not game_state["game_over"]:
         cmd = player_actions.get_input("> ")
         process_command(game_state, cmd)
-
 
 if __name__ == "__main__":
     main()
