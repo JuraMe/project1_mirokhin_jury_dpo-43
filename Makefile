@@ -14,4 +14,8 @@ package-install:
 	python3 -m pip install dist/*.whl
 
 lint:
-	poetry run ruff check .
+	poetry run ruff check . --fix
+
+format:
+	# You might also have a format target using ruff format or black
+	poetry run ruff format .
