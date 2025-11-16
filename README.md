@@ -15,6 +15,7 @@
 
 ## Демонстрация asciinema
 [![Демонстрация работы](https://asciinema.org/a/P9QvFg42GqHx6wnI0McJS4A7G.svg)](https://asciinema.org/a/P9QvFg42GqHx6wnI0McJS4A7G)
+- Ссылка: https://asciinema.org/a/P9QvFg42GqHx6wnI0McJS4A7G
 
 ## Запуск 
 ```bash
