@@ -18,7 +18,11 @@
 
 ## Запуск 
 ```bash
-poetry run project или make project
+poetry run project
+```
+```bash
+или 
+ make project
 ```
 
 Игровые команды
